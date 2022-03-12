@@ -1,29 +1,24 @@
-abstract class Driver {
-    private String Name;
-    private String Location;
-    private String Team;
+import java.io.Serializable;
 
-    public String getName() {
-        return Name;
-    }
+abstract class Driver implements Serializable {
+     String name;
+     String location;
+     String teamName;
 
-    public void setName(String name) {
-        Name = name;
-    }
+     Driver(String name,String teamName,String location){
+          this.name=name;
+          this.location=location;
+          this.teamName=teamName;
+     }
 
-    public String getLocation() {
-        return Location;
-    }
-
-    public void setLocation(String location) {
-        Location = location;
-    }
-
-    public String getTeam() {
-        return Team;
-    }
-
-    public void setTeam(String team) {
-        Team = team;
-    }
+     abstract void calPoint(int[] positions);
+     abstract void addPoints(int position);
+     abstract void printStats();
+     String getName(){
+          return name;
+     }
+     String getTeam(){
+          return teamName;
+     }
+     String getLocation(){return location;}
 }

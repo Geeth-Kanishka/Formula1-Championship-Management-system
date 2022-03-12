@@ -1,58 +1,92 @@
-public class Formula1Driver extends Driver{
-    private int FirstPosition;
-    private int SecPosition;
-    private int ThirdPosition;
-    private double Points;
+import java.io.Serializable;
+
+public class Formula1Driver extends Driver implements Comparable<Formula1Driver>, Serializable {
+    private int FirstPosition=0;
+    private int SecPosition=0;
+    private int ThirdPosition=0;
+    private int Points=0;
     private int NoOfRaces;
+    private int[] pointSchema={25,18,15,12,10,8,6,4,2,1};
 
-    public Formula1Driver(String name,String Team,String location){
-        setName(name);
-        setTeam(Team);
-        setLocation(location);
+    Formula1Driver(String name,String teamName,String location){
+        super(name,teamName,location);
     }
 
+    Formula1Driver(String name,String teamName,String location,int first,int sec,int third){
+        super(name,teamName,location);
+        this.FirstPosition=first;
+        this.SecPosition=sec;
+        this.ThirdPosition=third;
+    }
 
-    public void AddPoint( int position){
-        if(position<=10){
-            if (position==1){
-                FirstPosition++;
-                Points+=25;
-            }
-            else if (position==2){
-                SecPosition++;
-                Points+=18;
-            }
-            else if (position==3){
-                ThirdPosition++;
-                Points+=15;
-            }
-            else if (position==4){
-                Points+=12;
-            }
-            else if (position==5){
-                Points+=10;
-            }
-            else if (position==6){
-                Points+=8;
-            }
-            else if (position==7){
-                Points+=6;
-            }
-            else if (position==8){
-                Points+=4;
-            }
-            else if (position==9){
-                Points+=2;
-            }
-            else{Points+=1;}
-
+    public int compareTo(Formula1Driver other){
+        if(getPoints() == other.getPoints()){
+            return 0;
         }
-
+        else if(getPoints() > other.getPoints()){
+            return 1;
+        }
+        else{
+            return -1;
+        }
     }
-    public void printinfo(){
-        System.out.println(super.getName()+super.getTeam()+super.getLocation());
 
+    public void calPoint(int[] positions) {
+        for(int i=0;i<positions.length;i++){
+            int point=positions[i]*pointSchema[i];
+            Points+=point;
+        }
+    }
+
+    public void addPoints(int position){
+        NoOfRaces++;
+        switch(position){
+            case 1:{
+                FirstPosition = getFirstPosition() + 1;
+                setPoints(getPoints()+25);
+                break; }
+            case 2:{
+                SecPosition = getSecPosition() + 1;
+                setPoints(getPoints() + 18);
+                break; }
+            case 3:{
+                ThirdPosition = getThirdPosition() + 1;
+                setPoints(getPoints() + 15);
+                break; }
+        }
+        if(position>=4){
+            setPoints(getPoints() + pointSchema[position-1]);
+        }
+    }
+
+    public void printStats(){
+        System.out.println("\nName: "+name+"\nTeam: "+teamName+"\nLocation: "+location) ;
+        System.out.println("\nFirst positions: "+ getFirstPosition());
+        System.out.println("Second positions: "+ getSecPosition());
+        System.out.println("Third positions: "+ getThirdPosition());
+        System.out.println("Points: "+ getPoints());
+        System.out.println("No. of Races: "+ NoOfRaces);
+        System.out.println(".................................................");
     }
 
 
+    public int getPoints() {
+        return Points;
+    }
+
+    public void setPoints(int points) {
+        Points = points;
+    }
+
+    public int getFirstPosition() {
+        return FirstPosition;
+    }
+
+    public int getSecPosition() {
+        return SecPosition;
+    }
+
+    public int getThirdPosition() {
+        return ThirdPosition;
+    }
 }
