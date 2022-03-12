@@ -1,38 +1,26 @@
-public class Car {
-   private String name;
-   private Formula1Driver driver;
-   private String dName;
+import java.io.Serializable;
 
+public class Car implements Serializable {
+    private String name;
+    private Formula1Driver driver;
 
-   public Car(String tname){
-       this.name=tname;
-       dName= "empty";
+    Car(String name) {
+        this.setName(name);
+    }
 
-   }
-
-   public  void addDriver(Formula1Driver Driver){
-      this.driver=Driver;
-      dName= driver.getName();
-   }
-
-
-    public String getname() {
+    public String getName() {
         return name;
     }
 
-    public void setname(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getdName() {
-
-        return dName;
+    public Formula1Driver getDriver() {
+        return driver;
     }
 
-    public void setdName(String dName) {
-        this.dName = dName;
-    }
-    public void printinfo(){
-        System.out.println(name+dName);
+    public void setDriver(Formula1Driver driver) {
+        this.driver = driver;
     }
 }
